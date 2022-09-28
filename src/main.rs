@@ -14,10 +14,15 @@ mod mainview;
 
 fn main() {
     let cfg = app_config();
-    let alert_path = Arc::new(cfg.audio_file.unwrap_or(crate::config::DEFAULT_AUDIO.to_string()));
+    let alert_path = Arc::new(
+        cfg.audio_file
+            .unwrap_or(crate::config::DEFAULT_AUDIO.to_string()),
+    );
 
     let app = app::App::default();
-    let view = Arc::new(Mutex::new(mainview::UserInterface::make_window(cfg.color_theme)));
+    let view = Arc::new(Mutex::new(mainview::UserInterface::make_window(
+        cfg.color_theme,
+    )));
 
     // The number of cycles elapsed (cycle = work + break)
     let cycles = Arc::new(Mutex::new(0));
@@ -79,13 +84,10 @@ fn main() {
                     thread::spawn(move || audio::ring(&alert_path));
                 }
 
-                view_ref
-                    .lock()
-                    .unwrap()
-                    .lets(|mut view| {
-                        view.next.activate();
-                        view.set_idle();
-                    });
+                view_ref.lock().unwrap().lets(|mut view| {
+                    view.next.activate();
+                    view.set_idle();
+                });
                 app::awake();
             });
         });

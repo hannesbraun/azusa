@@ -14,7 +14,7 @@ pub struct UserInterface {
     pub win: Window,
     pub time: Frame,
     pub next: ReturnButton,
-    pub theme: ColorTheme
+    pub theme: ColorTheme,
 }
 
 impl UserInterface {
@@ -45,7 +45,12 @@ impl UserInterface {
         next.set_label_color(font_color);
         win.add(&next);
 
-        Self { win, time, next, theme }
+        Self {
+            win,
+            time,
+            next,
+            theme,
+        }
     }
 
     fn font_color(background: Color) -> Color {
@@ -59,7 +64,7 @@ impl UserInterface {
             Color::White
         }
     }
-    
+
     pub fn set_color(&mut self, c: Color) {
         let font_color = Self::font_color(c);
         self.time.set_label_color(font_color);
@@ -67,7 +72,7 @@ impl UserInterface {
         self.win.set_color(c);
         self.next.set_color(c);
         self.win.redraw();
-	}
+    }
 
     pub fn set_break(&mut self) {
         self.set_color(self.theme.break_color);
