@@ -1,0 +1,4 @@
+pomodoro_time=1
+short_break_time=1
+long_break_time=20
+pomodoros_before_long_break=2
