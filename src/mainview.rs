@@ -21,14 +21,14 @@ impl UserInterface {
     pub fn make_window(theme: ColorTheme) -> Self {
         let font_color = Self::font_color(theme.idle_color);
 
-        let mut win = Window::default().with_size(170, 130).with_label("Azusa");
+        let mut win = Window::default().with_size(170, 86).with_label("Azusa");
         win.set_color(theme.idle_color);
         win.end();
         win.show();
 
         let mut time = Frame::default()
-            .with_size(150, 70)
-            .with_pos(0, 11)
+            .with_size(150, 50)
+            .with_pos(0, 0)
             .with_label("Welcome")
             .center_x(&win);
         time.set_label_font(Font::HelveticaBold);
@@ -38,7 +38,7 @@ impl UserInterface {
 
         let mut next = ReturnButton::default()
             .with_size(150, 25)
-            .below_of(&time, 11)
+            .below_of(&time, 2)
             .with_label("Next");
         next.set_color(theme.idle_color);
         next.set_frame(FrameType::EngravedFrame);
