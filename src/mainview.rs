@@ -29,7 +29,7 @@ impl UserInterface {
         let mut time = Frame::default()
             .with_size(150, 50)
             .with_pos(0, 0)
-            .with_label("Welcome")
+            .with_label("Hello")
             .center_x(&win);
         time.set_label_font(Font::HelveticaBold);
         time.set_label_size(36);
