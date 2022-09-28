@@ -4,20 +4,23 @@ use fltk::frame::Frame;
 use fltk::prelude::*;
 use fltk::window::Window;
 
-const BREAK_COLOR: Color = Color::from_hex(0x3f7cac);
-const IDLE_COLOR: Color = Color::from_hex(0x993955);
-const WORK_COLOR: Color = Color::from_hex(0x69995d);
+pub struct ColorTheme {
+    pub break_color: Color,
+    pub idle_color: Color,
+    pub work_color: Color,
+}
 
 pub struct UserInterface {
     pub win: Window,
     pub time: Frame,
     pub next: ReturnButton,
+    pub theme: ColorTheme
 }
 
 impl UserInterface {
-    pub fn make_window() -> Self {
+    pub fn make_window(theme: ColorTheme) -> Self {
         let mut win = Window::default().with_size(170, 130).with_label("Azusa");
-        win.set_color(IDLE_COLOR);
+        win.set_color(theme.idle_color);
         win.end();
         win.show();
 
@@ -35,29 +38,29 @@ impl UserInterface {
             .with_size(150, 25)
             .below_of(&time, 11)
             .with_label("Next");
-        next.set_color(IDLE_COLOR);
+        next.set_color(theme.idle_color);
         next.set_frame(FrameType::EngravedFrame);
         next.set_label_color(Color::White);
         win.add(&next);
 
-        Self { win, time, next }
+        Self { win, time, next, theme }
     }
+    
+    pub fn set_color(&mut self, c: Color) {
+        self.win.set_color(c);
+        self.next.set_color(c);
+        self.win.redraw();
+	}
 
     pub fn set_break(&mut self) {
-        self.win.set_color(BREAK_COLOR);
-        self.next.set_color(BREAK_COLOR);
-        self.win.redraw();
+        self.set_color(self.theme.break_color);
     }
 
     pub fn set_idle(&mut self) {
-        self.win.set_color(IDLE_COLOR);
-        self.next.set_color(IDLE_COLOR);
-        self.win.redraw();
+        self.set_color(self.theme.idle_color);
     }
 
     pub fn set_work(&mut self) {
-        self.win.set_color(WORK_COLOR);
-        self.next.set_color(WORK_COLOR);
-        self.win.redraw();
+        self.set_color(self.theme.work_color);
     }
 }
