@@ -86,6 +86,7 @@ fn main() {
                         view.next.activate();
                         view.set_idle();
                     });
+                app::awake();
             });
         });
     }
