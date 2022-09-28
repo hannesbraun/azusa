@@ -19,6 +19,8 @@ pub struct UserInterface {
 
 impl UserInterface {
     pub fn make_window(theme: ColorTheme) -> Self {
+        let font_color = Self::font_color(theme.idle_color);
+
         let mut win = Window::default().with_size(170, 130).with_label("Azusa");
         win.set_color(theme.idle_color);
         win.end();
@@ -31,7 +33,7 @@ impl UserInterface {
             .center_x(&win);
         time.set_label_font(Font::HelveticaBold);
         time.set_label_size(36);
-        time.set_label_color(Color::White);
+        time.set_label_color(font_color);
         win.add(&time);
 
         let mut next = ReturnButton::default()
@@ -40,13 +42,28 @@ impl UserInterface {
             .with_label("Next");
         next.set_color(theme.idle_color);
         next.set_frame(FrameType::EngravedFrame);
-        next.set_label_color(Color::White);
+        next.set_label_color(font_color);
         win.add(&next);
 
         Self { win, time, next, theme }
     }
+
+    fn font_color(background: Color) -> Color {
+        let (r, g, b) = background.to_rgb();
+
+        let brightness = (r as f32 + g as f32 + b as f32) / (3.0 * 255.0);
+
+        if brightness > 0.5 {
+            Color::Black
+        } else {
+            Color::White
+        }
+    }
     
     pub fn set_color(&mut self, c: Color) {
+        let font_color = Self::font_color(c);
+        self.time.set_label_color(font_color);
+        self.next.set_label_color(font_color);
         self.win.set_color(c);
         self.next.set_color(c);
         self.win.redraw();
