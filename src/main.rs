@@ -58,8 +58,12 @@ fn main() {
                 while start.elapsed().as_millis() < duration.as_millis() {
                     let remaining = duration.sub(start.elapsed());
                     view_ref.lock().unwrap().time.set_label(
-                        format!("{:0>2}:{:0>2}", remaining.as_secs() / 60, remaining.as_secs() % 60)
-                            .as_str(),
+                        format!(
+                            "{:0>2}:{:0>2}",
+                            remaining.as_secs() / 60,
+                            remaining.as_secs() % 60
+                        )
+                        .as_str(),
                     );
                     app::awake();
                     sleep(update_interval);
