@@ -1,0 +1,5 @@
+pomodoro_time=25
+short_break_time=4
+long_break_time=20
+pomodoros_before_long_break=4
+alert=alert.mp3

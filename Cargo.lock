@@ -14,6 +14,7 @@ version = "0.1.0"
 dependencies = [
  "also",
  "fltk",
+ "play",
  "simple_config_parser",
 ]
 
@@ -88,16 +89,61 @@ dependencies = [
 ]
 
 [[package]]
+name = "libc"
+version = "0.2.133"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c0f80d65747a3e43d1596c7c5492d95d5edddaabd45a7fcdb02b95f644164966"
+
+[[package]]
+name = "mpg123-sys"
+version = "0.6.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a75c26239d85c1423091c109fcdabbcfaac868576dc018b0e959137217907610"
+dependencies = [
+ "bitflags",
+ "libc",
+ "pkg-config",
+]
+
+[[package]]
 name = "once_cell"
 version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e82dad04139b71a90c080c8463fe0dc7902db5192d939bd0950f074d014339e1"
 
 [[package]]
+name = "out123-sys"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5da977be7c4b44e2ad26be779aafc1761a89bd2ee6e363770bb71eb67a00d2e5"
+dependencies = [
+ "libc",
+ "mpg123-sys",
+ "pkg-config",
+]
+
+[[package]]
 name = "paste"
 version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0744126afe1a6dd7f394cb50a716dbe086cb06e255e53d8d0185d82828358fb5"
+
+[[package]]
+name = "pkg-config"
+version = "0.3.25"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1df8c4ec4b0627e53bdf214615ad287367e482558cf84b109250b37464dc03ae"
+
+[[package]]
+name = "play"
+version = "0.5.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c570085654588139e9ea2f452fe7dcb78d576da4f1c04d58b98b32fc42744ff0"
+dependencies = [
+ "libc",
+ "mpg123-sys",
+ "out123-sys",
+]
 
 [[package]]
 name = "simple_config_parser"

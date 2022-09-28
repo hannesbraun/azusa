@@ -8,11 +8,13 @@ use std::thread;
 use std::thread::sleep;
 use std::time::{Duration, Instant};
 
+mod audio;
 mod config;
 mod mainview;
 
 fn main() {
     let cfg = app_config();
+    let alert_path = Arc::new(cfg.audio_file.unwrap_or(crate::config::DEFAULT_AUDIO.to_string()));
 
     let app = app::App::default();
     let view = Arc::new(Mutex::new(mainview::UserInterface::make_window()));
@@ -34,6 +36,7 @@ fn main() {
             let view_ref = Arc::clone(&view_ref);
             let cycles = Arc::clone(&cycles);
             let work = Arc::clone(&work);
+            let alert_path = Arc::clone(&alert_path);
 
             thread::spawn(move || {
                 let start = Instant::now();
@@ -66,6 +69,11 @@ fn main() {
                     *cycles.lock().unwrap() += 1;
                 }
                 *work.lock().unwrap() ^= true;
+
+                {
+                    // Play sound to notify user
+                    thread::spawn(move || audio::ring(&alert_path));
+                }
 
                 view_ref
                     .lock()

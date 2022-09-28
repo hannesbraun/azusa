@@ -1,10 +1,13 @@
 use simple_config_parser::{Config, ConfigError};
 
+pub const DEFAULT_AUDIO: &str = "alert.mp3";
+
 pub struct PomodoroConfig {
     pub work: u64,
     pub short_break: u64,
     pub long_break: u64,
     pub long_break_after: u32,
+    pub audio_file: Option<String>,
 }
 
 const DEFAULT_POMODORO: PomodoroConfig = PomodoroConfig {
@@ -12,6 +15,7 @@ const DEFAULT_POMODORO: PomodoroConfig = PomodoroConfig {
     short_break: 4,
     long_break: 20,
     long_break_after: 4,
+    audio_file: None,
 };
 
 pub fn app_config() -> PomodoroConfig {
@@ -32,6 +36,7 @@ fn read_config(cfg: Config) -> PomodoroConfig {
         long_break_after: cfg
             .get::<u32>("pomodoros_before_long_break")
             .unwrap_or(DEFAULT_POMODORO.long_break_after),
+        audio_file: cfg.get_str("alert").ok(),
     }
 }
 
