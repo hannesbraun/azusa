@@ -82,8 +82,10 @@ fn main() {
                 view_ref
                     .lock()
                     .unwrap()
-                    .also(|view| view.next.activate())
-                    .lets(|mut view| view.set_idle());
+                    .lets(|mut view| {
+                        view.next.activate();
+                        view.set_idle();
+                    });
             });
         });
     }
