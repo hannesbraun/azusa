@@ -48,15 +48,15 @@ fn read_config(cfg: Config) -> PomodoroConfig {
             break_color: cfg
                 .get_str("break_color")
                 .map(|s| u32::from_str_radix(&s, 16).unwrap())
-                .map_or(DEFAULT_THEME.break_color, |i| Color::from_hex(i)),
+                .map_or(DEFAULT_THEME.break_color, Color::from_hex),
             idle_color: cfg
                 .get_str("idle_color")
                 .map(|s| u32::from_str_radix(&s, 16).unwrap())
-                .map_or(DEFAULT_THEME.idle_color, |i| Color::from_hex(i)),
+                .map_or(DEFAULT_THEME.idle_color, Color::from_hex),
             work_color: cfg
                 .get_str("work_color")
                 .map(|s| u32::from_str_radix(&s, 16).unwrap())
-                .map_or(DEFAULT_THEME.work_color, |i| Color::from_hex(i)),
+                .map_or(DEFAULT_THEME.work_color, Color::from_hex),
         },
     }
 }

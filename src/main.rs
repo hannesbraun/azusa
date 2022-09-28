@@ -16,7 +16,7 @@ fn main() {
     let cfg = app_config();
     let alert_path = Arc::new(
         cfg.audio_file
-            .unwrap_or(crate::config::DEFAULT_AUDIO.to_string()),
+            .unwrap_or_else(|| config::DEFAULT_AUDIO.to_string()),
     );
 
     let app = app::App::default();
