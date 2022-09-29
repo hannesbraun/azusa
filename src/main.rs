@@ -12,12 +12,29 @@ mod audio;
 mod config;
 mod mainview;
 
+#[cfg_attr(not(target_os = "macos"), feature(core_foundation))]
+#[cfg(target_os = "macos")]
+fn fallback_audio() -> String {
+    core_foundation::bundle::CFBundle::main_bundle()
+        .bundle_resources_url()
+        .unwrap()
+        .absolute()
+        .to_path()
+        .unwrap_or_default()
+        .also(|p| p.push(config::DEFAULT_AUDIO))
+        .to_str()
+        .unwrap_or_default()
+        .to_string()
+}
+
+#[cfg(not(target_os = "macos"))]
+fn fallback_audio() -> String {
+    config::DEFAULT_AUDIO.to_string()
+}
+
 fn main() {
     let cfg = app_config();
-    let alert_path = Arc::new(
-        cfg.audio_file
-            .unwrap_or_else(|| config::DEFAULT_AUDIO.to_string()),
-    );
+    let alert_path = Arc::new(cfg.audio_file.unwrap_or_else(fallback_audio));
 
     let app = app::App::default();
     let view = Arc::new(Mutex::new(mainview::UserInterface::make_window(
