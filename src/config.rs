@@ -1,6 +1,8 @@
 use crate::mainview::ColorTheme;
+use also::Also;
 use fltk::enums::Color;
 use simple_config_parser::{Config, ConfigError};
+use std::path::PathBuf;
 
 pub struct PomodoroConfig {
     pub work: u64,
@@ -62,7 +64,11 @@ fn read_config(cfg: Config) -> PomodoroConfig {
 }
 
 fn get_config() -> Result<Config, ConfigError> {
-    let paths = [".azusa", "~/.azusa"];
+    let paths = vec![PathBuf::from(".azusa")].also(|paths| {
+        dirs::home_dir().map(|home| {
+            paths.push(home.join(".azusa"));
+        });
+    });
 
     let mut cfg = Err(ConfigError::NoFileDefined);
     for path in paths {
