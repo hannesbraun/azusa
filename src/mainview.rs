@@ -8,6 +8,9 @@ pub struct ColorTheme {
     pub break_color: Color,
     pub idle_color: Color,
     pub work_color: Color,
+    pub break_font_color: Option<Color>,
+    pub idle_font_color: Option<Color>,
+    pub work_font_color: Option<Color>,
 }
 
 pub struct UserInterface {
@@ -65,8 +68,8 @@ impl UserInterface {
         }
     }
 
-    pub fn set_color(&mut self, c: Color) {
-        let font_color = Self::font_color(c);
+    pub fn set_color(&mut self, c: Color, fc: Option<Color>) {
+        let font_color = fc.unwrap_or_else(|| Self::font_color(c));
         self.time.set_label_color(font_color);
         self.next.set_label_color(font_color);
         self.win.set_color(c);
@@ -75,14 +78,14 @@ impl UserInterface {
     }
 
     pub fn set_break(&mut self) {
-        self.set_color(self.theme.break_color);
+        self.set_color(self.theme.break_color, self.theme.break_font_color);
     }
 
     pub fn set_idle(&mut self) {
-        self.set_color(self.theme.idle_color);
+        self.set_color(self.theme.idle_color, self.theme.idle_font_color);
     }
 
     pub fn set_work(&mut self) {
-        self.set_color(self.theme.work_color);
+        self.set_color(self.theme.work_color, self.theme.work_font_color);
     }
 }

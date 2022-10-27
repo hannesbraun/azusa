@@ -18,6 +18,9 @@ const DEFAULT_THEME: ColorTheme = ColorTheme {
     break_color: Color::from_hex(0x3f7cac),
     idle_color: Color::from_hex(0x993955),
     work_color: Color::from_hex(0x69995d),
+    break_font_color: None,
+    idle_font_color: None,
+    work_font_color: None,
 };
 
 const DEFAULT_CFG: PomodoroConfig = PomodoroConfig {
@@ -59,6 +62,18 @@ fn read_config(cfg: Config) -> PomodoroConfig {
                 .get_str("work_color")
                 .map(|s| u32::from_str_radix(&s, 16).unwrap())
                 .map_or(DEFAULT_THEME.work_color, Color::from_hex),
+            break_font_color: cfg
+                .get_str("break_font_color")
+                .map(|s| u32::from_str_radix(&s, 16).unwrap())
+                .map_or(DEFAULT_THEME.break_font_color, |c| Some(Color::from_hex(c))),
+            idle_font_color: cfg
+                .get_str("idle_font_color")
+                .map(|s| u32::from_str_radix(&s, 16).unwrap())
+                .map_or(DEFAULT_THEME.idle_font_color, |c| Some(Color::from_hex(c))),
+            work_font_color: cfg
+                .get_str("work_font_color")
+                .map(|s| u32::from_str_radix(&s, 16).unwrap())
+                .map_or(DEFAULT_THEME.work_font_color, |c| Some(Color::from_hex(c))),
         },
     }
 }
