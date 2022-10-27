@@ -102,6 +102,11 @@ fn main() {
                 }
 
                 view_ref.lock().unwrap().lets(|mut view| {
+                    // Ensure displaying 00:00
+                    // When the app is not visible, I often experienced something like 00:19 being displayed
+                    // after the time is over.
+                    view.time.set_label("00:00");
+
                     view.next.activate();
                     view.set_idle();
                 });
